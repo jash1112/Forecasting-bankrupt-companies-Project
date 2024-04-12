@@ -19,8 +19,8 @@ The study includes the following hypotheses:
 Companies listed on the Canadian stock market during the period 2013  - 2022.
 
 ## Team Members:
-1- Aayush Chhaperwal
-2- Ilun Wu
-3- Jash Bikash
-4- Johnny Nguyen
-5- Maher Alqarra
+1. Aayush Chhaperwal
+2. Ilun Wu
+3. Jash Bikash
+4. Johnny Nguyen
+5. Maher Alqarra
