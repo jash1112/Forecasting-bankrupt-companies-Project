@@ -4,9 +4,9 @@ from flask import render_template
 
 app = Flask(__name__)
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/intro')
 def index():
-    return render_template('index.html')
+   return render_template('index.html')
 
 
 if __name__ == "__main__":
