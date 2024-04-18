@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 # Create a Flask app
 app = Flask(__name__)
 
-# Create a SQLAlchemy engine
+# SQLAlchemy engine
 render_username = 'forecating_companies_future_user'
 render_password = 'qRvkrYzSYuo6TvDWAh8SMcQokhT5pYyb'
 render_host = 'dpg-cog4tdmv3ddc73e67q00-a.ohio-postgres.render.com'
