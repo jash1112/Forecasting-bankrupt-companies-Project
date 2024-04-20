@@ -20,7 +20,7 @@ Companies listed on the Canadian stock market during the period 2013  - 2022.
 
 ## Team Members:
 1. Aayush Chhaperwal
-2. Ilun Wu
+2. I Lun Wu
 3. Jash Bikash
 4. Johnny Nguyen
 5. Maher Alqarra
