@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template,request
 from sqlalchemy import create_engine, select
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
@@ -16,7 +16,6 @@ Base = automap_base()
 
 # reflect the tables
 Base.prepare(engine, reflect=True)
-
 print(Base.classes.keys())
 
  
@@ -33,7 +32,19 @@ def fetch_data_from_database(table):
             print(f"Error fetching data from database: {e}")
             return []
 
-
+@app.route('/data-for-company')
+def data_for_company():
+    company_name = request.args.get('name', default=None, type=str)
+    if company_name:
+        # Assuming 'Company' is the class mapped to the company table
+        Company = Base.classes.company
+        company_data = fetch_data_from_database(Company)
+        # You would filter this data based on the company_name and prepare it for the frontend
+        # This is a placeholder for the logic you would implement
+        filtered_data = {'trendAnalysis': {}, 'comparativeAnalysis': {}, 'financialRatiosDistribution': {}, 'correlationAnalysis': {}, 'riskAssessment': {}}
+        return jsonify(filtered_data)
+    else:
+        return jsonify({'error': 'Company name not provided'}), 400
 
 @app.route('/')
 def index():
@@ -42,6 +53,10 @@ def index():
 @app.route('/dashboard.html')
 def dashboard():
     return render_template('dashboard.html')
+
+@app.route('/introduction.html')
+def introduction():
+    return render_template('introduction.html')
 
 
 
