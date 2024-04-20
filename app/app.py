@@ -1,6 +1,5 @@
 from flask import Flask, jsonify, render_template, request
 from sqlalchemy import create_engine, Column, Integer, String, Float
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, Session, scoped_session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
@@ -30,9 +29,9 @@ session = Session()
 def fetch_data_from_database(table):
     with Session() as session:
         try:
-            # Query all entries from the provided table
             result = session.query(table).all()
-            # Convert results into a list of dictionaries excluding internal SQLAlchemy keys
+            if not result:
+                print("No data returned from query.")
             data = [row.__dict__ for row in result]
             for item in data:
                 item.pop('_sa_instance_state', None)
