@@ -34,13 +34,17 @@ def fetch_data_from_database(table):
             return []
 
 
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template("index(prototype_1).html")
 
 @app.route('/dashboard.html')
 def dashboard():
     return render_template('dashboard.html')
 
+
+
 if __name__ == '__main__':
     app.run(debug=True)
+
