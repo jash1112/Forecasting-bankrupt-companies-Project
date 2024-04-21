@@ -3,7 +3,8 @@ from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.orm import sessionmaker, Session, scoped_session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
-
+from flask import Flask, request, jsonify
+from keras.models import load_model
 # Flask app setup
 app = Flask(__name__)
 
@@ -20,7 +21,7 @@ metadata = MetaData()
 metadata.reflect(engine)
 
 # Save references to each table
-company_data_table = metadata.tables['Company_Data']
+company_data_table = metadata.tables["Company_Data"]
 
 # Create a scoped session to interact with the database
 Session = scoped_session(sessionmaker(bind=engine))
@@ -29,7 +30,10 @@ session = Session()
 def fetch_data_from_database(table):
     with Session() as session:
         try:
-            result = session.query(table).all()
+            query = session.query(table)
+            print(f"Executing SQL: {query}")  # This will show the raw SQL query being executed
+            result = query.all()
+            print(f"Query Results: {result}")  # This will show the results fetched from the database
             if not result:
                 print("No data returned from query.")
             data = [row.__dict__ for row in result]
@@ -40,11 +44,26 @@ def fetch_data_from_database(table):
             print(f"Error fetching data from database: {e}")
             return []
         
+
+# # Load the trained model
+# model = load_model("Forecasting_bankrupt_companies.h5")
+# @app.route("/predict", methods=["POST"])
+# def predict():
+#     # Get input data from request
+#     data = request.json
+#     # Make prediction using the loaded model
+#     prediction = model.predict([data["input"]])
+#     # Return prediction as JSON response
+#     return jsonify({"prediction": prediction.tolist()})
+        
 @app.route('/api/data')
 def get_company_data():
     # Fetch data from the database
     company_data = fetch_data_from_database(company_data_table)
     
+    # Log the data to the console before returning it
+    print("Data to be returned:", company_data)
+
     # Return the data as JSON
     if not company_data:
         return jsonify({"error": "No data found"}), 404
