@@ -5,6 +5,8 @@ from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 from flask import Flask, request, jsonify
 from keras.models import load_model
+from sqlalchemy import Table
+
 # Flask app setup
 app = Flask(__name__)
 
@@ -14,35 +16,41 @@ render_password = 'qRvkrYzSYuo6TvDWAh8SMcQokhT5pYyb'
 render_host = 'dpg-cog4tdmv3ddc73e67q00-a.ohio-postgres.render.com'
 database = 'forecating_companies_future'
 engine = create_engine(f"postgresql+psycopg2://{render_username}:{render_password}@{render_host}:5432/{database}")
+
+# Create a MetaData object
 metadata = MetaData()
 
-
 # Reflect the tables
-metadata.reflect(engine)
+user_table = Table(render_username, metadata, autoload=True, autoload_with=engine)
 
-# Save references to each table
-company_data_table = metadata.tables["Company_Data"]
+# Use a scoped session to interact with the database
+with engine.connect() as connection:
+    query = user_table.select()
+    result = connection.execute(query)
 
-# Create a scoped session to interact with the database
-Session = scoped_session(sessionmaker(bind=engine))
-session = Session()
+    # Fetch all rows from the result
+    rows = result.fetchall()
 
-def fetch_data_from_database(table):
-    with Session() as session:
-        try:
-            query = session.query(table)
-            print(f"Executing SQL: {query}")  # This will show the raw SQL query being executed
-            result = query.all()
-            print(f"Query Results: {result}")  # This will show the results fetched from the database
-            if not result:
-                print("No data returned from query.")
-            data = [row.__dict__ for row in result]
-            for item in data:
-                item.pop('_sa_instance_state', None)
-            return data
-        except Exception as e:
-            print(f"Error fetching data from database: {e}")
-            return []
+    # Print the fetched rows
+    for row in rows:
+        print(row)
+
+# def fetch_data_from_database(table):
+#     with Session() as session:
+#         try:
+#             query = session.query(table)
+#             print(f"Executing SQL: {query}")  # This will show the raw SQL query being executed
+#             result = query.all()
+#             print(f"Query Results: {result}")  # This will show the results fetched from the database
+#             if not result:
+#                 print("No data returned from query.")
+#             data = [row.__dict__ for row in result]
+#             for item in data:
+#                 item.pop('_sa_instance_state', None)
+#             return data
+#         except Exception as e:
+#             print(f"Error fetching data from database: {e}")
+#             return []
         
 
 # # Load the trained model
@@ -56,18 +64,18 @@ def fetch_data_from_database(table):
 #     # Return prediction as JSON response
 #     return jsonify({"prediction": prediction.tolist()})
         
-@app.route('/api/data')
-def get_company_data():
-    # Fetch data from the database
-    company_data = fetch_data_from_database(company_data_table)
+# @app.route('/api/data')
+# def get_company_data():
+#     # Fetch data from the database
+#     company_data = fetch_data_from_database(company_data_table)
     
-    # Log the data to the console before returning it
-    print("Data to be returned:", company_data)
+#     # Log the data to the console before returning it
+#     print("Data to be returned:", company_data)
 
-    # Return the data as JSON
-    if not company_data:
-        return jsonify({"error": "No data found"}), 404
-    return jsonify(company_data)
+#     # Return the data as JSON
+#     if not company_data:
+#         return jsonify({"error": "No data found"}), 404
+#     return jsonify(company_data)
 
 
 # Static page routes
