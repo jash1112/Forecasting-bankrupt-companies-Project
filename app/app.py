@@ -20,20 +20,33 @@ engine = create_engine(f"postgresql+psycopg2://{render_username}:{render_passwor
 # Create a MetaData object
 metadata = MetaData()
 
+# Bind the MetaData to the engine
+metadata.bind = engine
+
 # Reflect the tables
-user_table = Table(render_username, metadata, autoload=True, autoload_with=engine)
+metadata.reflect(bind=engine)
 
-# Use a scoped session to interact with the database
-with engine.connect() as connection:
-    query = user_table.select()
-    result = connection.execute(query)
+# Print the table names to verify
+print(metadata.tables.keys())
 
-    # Fetch all rows from the result
-    rows = result.fetchall()
+# Access the reflected table
+user_table = metadata.tables.get(render_username)
 
-    # Print the fetched rows
-    for row in rows:
-        print(row)
+# Check if the table exists
+if user_table is not None:
+    # Use a scoped session to interact with the database
+    with engine.connect() as connection:
+        query = user_table.select()
+        result = connection.execute(query)
+
+        # Fetch all rows from the result
+        rows = result.fetchall()
+
+        # Print the fetched rows
+        for row in rows:
+            print(row)
+else:
+    print(f"The table '{render_username}' does not exist.")
 
 # def fetch_data_from_database(table):
 #     with Session() as session:
@@ -63,19 +76,36 @@ with engine.connect() as connection:
 #     prediction = model.predict([data["input"]])
 #     # Return prediction as JSON response
 #     return jsonify({"prediction": prediction.tolist()})
-        
-# @app.route('/api/data')
-# def get_company_data():
-#     # Fetch data from the database
-#     company_data = fetch_data_from_database(company_data_table)
-    
-#     # Log the data to the console before returning it
-#     print("Data to be returned:", company_data)
 
-#     # Return the data as JSON
-#     if not company_data:
-#         return jsonify({"error": "No data found"}), 404
-#     return jsonify(company_data)
+# Create a session maker
+Session = sessionmaker(bind=engine)
+
+def fetch_data_from_database(table):
+    # Create a session
+    session = Session()
+
+    try:
+        # Query all data from the table
+        data = session.query(table).all()
+        # Convert data to dictionary format
+        data_dict = [row.__dict__ for row in data]
+        # Remove the '_sa_instance_state' key from each row
+        for row in data_dict:
+            row.pop('_sa_instance_state', None)
+        return data_dict
+    except Exception as e:
+        print(f"Error fetching data from database: {e}")
+        return []
+    finally:
+        # Close the session
+        session.close()
+        
+@app.route('/api/data')
+def get_company_data():
+    company_data = fetch_data_from_database(user_table)
+    if not company_data:
+        return jsonify({"error": "No data found"}), 404
+    return jsonify(company_data)
 
 
 # Static page routes
