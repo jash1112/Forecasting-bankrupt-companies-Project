@@ -4,11 +4,35 @@ from sqlalchemy import create_engine, select, Column, Integer, String, Float
 # from sqlalchemy.orm import sessionmaker, Session
 # from sqlalchemy.ext.automap import automap_base
 
+
 from flask import Flask, jsonify, render_template
 from sqlalchemy import create_engine, select
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
+from flask import SQLAlchemy
+import sqlite3
 
+conn = sqlite3.connect('user.db')
+
+
+db = SQLAlchemy()
+
+from common.db import db
+from common.ma import ma
+
+db.init_app(app)
+ma.init_app(app)
+
+
+# render_username = 'forecating_companies_future_user'
+# render_password = 'qRvkrYzSYuo6TvDWAh8SMcQokhT5pYyb'
+# render_host = 'dpg-cog4tdmv3ddc73e67q00-a.ohio-postgres.render.com'
+# database = 'forecating_companies_future'
+# engine = create_engine(f"postgresql+psycopg2://{render_username}:{render_password}@{render_host}:5432/{database}")
+# Base = automap_base()
+
+
+#------------------------------------------------------------------------------------------------------1
 # Flask app setup
 # app = Flask(__name__)
 
@@ -112,17 +136,17 @@ from sqlalchemy.orm import Session
 # if __name__ == '__main__':
 #     app.run(debug=True)
 
-
+# ------------------------------------------------------------------------------------------------------------------2
 # Flask app setup
-app = Flask(__name__)
+# app = Flask(__name__)
 
 # Database configuration
-render_username = 'forecating_companies_future_user'
-render_password = 'qRvkrYzSYuo6TvDWAh8SMcQokhT5pYyb'
-render_host = 'dpg-cog4tdmv3ddc73e67q00-a.ohio-postgres.render.com'
-database = 'forecating_companies_future'
-engine = create_engine(f"postgresql+psycopg2://{render_username}:{render_password}@{render_host}:5432/{database}")
-Base = automap_base()
+# render_username = 'forecating_companies_future_user'
+# render_password = 'qRvkrYzSYuo6TvDWAh8SMcQokhT5pYyb'
+# render_host = 'dpg-cog4tdmv3ddc73e67q00-a.ohio-postgres.render.com'
+# database = 'forecating_companies_future'
+# engine = create_engine(f"postgresql+psycopg2://{render_username}:{render_password}@{render_host}:5432/{database}")
+# Base = automap_base()
 
 # # reflect the tables
 # Base.prepare(engine, reflect=True)
@@ -132,17 +156,17 @@ Base = automap_base()
 # # Save references to each table
 # Company_Data = Base.classes.Company_Data
 
-def fetch_data_from_database(table):
-    with Session(engine) as session:
-        try:
-            result = session.query(table).all()
-            data = [row.__dict__ for row in result]
-            for item in data:
-                item.pop('_sa_instance_state', None)
-            return data
-        except Exception as e:
-            print(f"Error fetching data from database: {e}")
-            return []
+# def fetch_data_from_database(table):
+#     with Session(engine) as session:
+#         try:
+#             result = session.query(table).all()
+#             data = [row.__dict__ for row in result]
+#             for item in data:
+#                 item.pop('_sa_instance_state', None)
+#             return data
+#         except Exception as e:
+#             print(f"Error fetching data from database: {e}")
+#             return []
 
 # @app.route('/api/Company_Data', methods=['GET'])
 # def company_data():
@@ -154,18 +178,18 @@ def fetch_data_from_database(table):
 #     return jsonify(company_data)
 
 # Static page routes
-@app.route('/')
-def index():
-    return render_template("index_main.html")
+# @app.route('/')
+# def index():
+#     return render_template("index_main.html")
 
-@app.route('/dashboard.html')
-def dashboard():
-    return render_template('dashboard.html')
+# @app.route('/dashboard.html')
+# def dashboard():
+#     return render_template('dashboard.html')
 
-@app.route('/introduction.html')
-def introduction():
-    return render_template('introduction.html')
+# @app.route('/introduction.html')
+# def introduction():
+#     return render_template('introduction.html')
 
-# Run the Flask application
-if __name__ == '__main__':
-    app.run(debug=True)
+# # Run the Flask application
+# if __name__ == '__main__':
+#     app.run(debug=True)
