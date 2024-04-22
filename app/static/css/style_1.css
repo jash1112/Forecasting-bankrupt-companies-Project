@@ -30,7 +30,10 @@
   /* Add your base styles */
 body {
     font-family: 'Arial', sans-serif;
+    background-color: black;
 }
+
+
 
 /* Style your navigation bar */
 .navbar {
@@ -41,7 +44,7 @@ body {
 .hero-section {
     background: url('') no-repeat center center;
     background-size: cover;
-    color: #333;
+    color: white;
     text-align: center;
     padding: 5rem 0;
 }
@@ -67,3 +70,4 @@ body {
         font-size: 3rem; /* Adjust for smaller screens */
     }
 }
+
