@@ -7,14 +7,15 @@ function init() {
     // Use D3 to fetch the data
     d3.json(url).then(data => {
       console.log(data);
+      let names= data["Name"];
   
       // Populate dropdown with subject IDs
-      data.Names.forEach(name => {
+     names.forEach(name => {
         dropdown.append("option").text(name).property("value", name);
       });
   
       // Use the first sample from the list to build the initial plots
-      const firstSample = data.names[0];
+      const firstSample = data.Name[0];
       updateCharts(firstSample);
       updateBubbleCharts(firstSample);
       updateMetadata(firstSample);
@@ -23,7 +24,7 @@ function init() {
   
   function updateMetadata(sample) {
     d3.json(url).then(data => {
-      var metadata = data.metadata.filter(obj => obj.id == sample)[0];
+      var metadata = data.metadata.filter(obj => obj.Name == sample)[0];
       var panel = d3.select("#sample-metadata");
       panel.html(""); // Clear any existing metadata
       Object.entries(metadata).forEach(([key, value]) => {
