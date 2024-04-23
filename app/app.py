@@ -33,20 +33,36 @@ print(metadata.tables.keys())
 company_data_table = metadata.tables.get('Company_Data')
 
 # Function to fetch data from the database
+# def fetch_data_from_database(table):
+#     if table is not None:
+#         with engine.connect() as connection:
+#             query = table.select()
+#             result = connection.execute(query)
+#             rows = result.fetchall()
+#             # Fetch column names as strings
+#             column_names = [str(column) for column in result.keys()]
+#             data = {column:[row[i] for row in rows if row[i] is not None] for i, column in enumerate(column_names)}
+#                         # Convert each row to a dictionary
+#             # return jsonify([{column: row[column] for column in column_names} for row in rows])
+#     return data
 def fetch_data_from_database(table):
     if table is not None:
-        with engine.connect() as connection:
-            query = table.select()
-            result = connection.execute(query)
-            rows = result.fetchall()
-            # Fetch column names as strings
-            column_names = [str(column) for column in result.keys()]
-            data = {column:[row[i] for row in rows if row[i] is not None] for i, column in enumerate(column_names)}
-                        # Convert each row to a dictionary
-            # return jsonify([{column: row[column] for column in column_names} for row in rows])
-            print(data['Name'])
-    return data
-
+        session = Session(bind=engine)  # Use ORM session for querying
+        try:
+            query = session.query(table)  # ORM query
+            results = query.all()  # Fetch all results
+            data_list = [
+                {column.name: getattr(row, column.name) for column in table.columns}
+                for row in results
+            ]
+            return jsonify(data_list)  # Properly format and return JSON
+        except Exception as e:
+            session.rollback()  # Roll back in case of error
+            print(f"Error fetching data: {e}")
+        finally:
+            session.close()  # Always close the session
+    else:
+        return jsonify([])
 
 # # Load the trained model
 # model = load_model("Forecasting_bankrupt_companies.h5")

@@ -1,32 +1,18 @@
 let url = 'http://127.0.0.1:5000/api/data';
 let allData = [];
-function init() {
-    // Use D3 to select the dropdown menu
-    var dropdown = d3.select("#companyDropdown");
-  
-    // Use D3 to fetch the data
-    d3.json(url).then(data => {
-      console.log(data);
-      let names= data["Name"];
-    //   allData = data;
-        
-      // Populate dropdown with subject IDs
-     names.forEach(name => {
-        dropdown.append("option").text(name).property("value", name);
-      });
-    //   updateDropdown(data);
-      // Use the first sample from the list to build the initial plots
-      const firstSample = data.Name[0];
-      updateBarChart(firstSample);
-      updateDropdown(data);
-
-    
-    });
-  };
+// Fetch all data and initialize dropdowns
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    allData = data; // Store the data for later use
+    updateDropdown(data);
+  })
+  .catch(error => console.error('Error fetching data:', error));
 
   function updateDropdown(data) {
-    const dropdown = d3.select("#companyDropdown");
-    const uniqueNames = [...new Set(data.Name)];  // Extract distinct names
+      // Extract distinct names
+      const dropdown = d3.select("#companyDropdown");
+      const uniqueNames = [...new Set(data.Name)]; 
 
     // Clear previous options
     dropdown.selectAll('option').remove();
@@ -37,19 +23,24 @@ function init() {
     });
     dropdown.on("change", function() {
         const selectedCompany = d3.select(this).property("value");
-        updateBarChart(selectedCompany);
+        updateBarChart(this.value);
     });
-}
+     // Use the first sample from the list to build the initial plots
+    //   const firstSample = data.Name[0];
+    //   updateBarChart(firstSample);
+
+};
 
 
 
-function updateBarChart(selectedCompany) {
+function updateBarChart(sample) {
     // Assuming 'allData' contains an array of objects where each object has the data for one company
-    const selectedData = allData.filter(item => item.Name === selectedCompany);
+    const selectedData = allData[sample];
+    const azs = 'Altman Z-Score';
 
     // Now, assuming 'selectedData' has properties 'year' and 'Altman Z-Score' which are arrays
-    const years = selectedData.year;  // Example: [2018, 2019, 2020]
-    const zScores = selectedData['Altman Z-Score'];  // Example: [1.5, 1.7, 1.8]
+    const years = allData.year;  // Example: [2018, 2019, 2020]
+    const zScores = allData.azs;  // Example: [1.5, 1.7, 1.8]
 
     var trace = {
         x: years,
@@ -86,7 +77,8 @@ function optionChanged(newSample) {
   };
 
 // Initialize the dashboard
-init();
+// init();
+updateDropdown()
 
 //--------------------------------------------------------
   
