@@ -6,7 +6,7 @@
     <title>Financial Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-
+    <script src="https://cdn.plot.ly/plotly-2.31.1.min.js" charset="utf-8"></script>
 </head>
 <body>
     <div id="companySelector">
@@ -19,6 +19,8 @@
         <!-- Summary cards go here -->
     </div>
     <div id="financialCharts">
+        <canvas id="financialCharts"></canvas>
+
         <!-- Financial charts go here -->
     </div>
     <div id="modelOutputs">
