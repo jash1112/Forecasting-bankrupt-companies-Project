@@ -43,13 +43,14 @@ def fetch_data_from_database(table):
             data = {column:[row[i] for row in rows if row[i] is not None] for i, column in enumerate(column_names)}
                         # Convert each row to a dictionary
             # return jsonify([{column: row[column] for column in column_names} for row in rows])
+            print(data['Name'])
     return data
 
 
 # # Load the trained model
 # model = load_model("Forecasting_bankrupt_companies.h5")
 # @app.route("/predict", methods=["POST"])
-# def predict():
+# def predict():ta
 #     # Get input data from request
 #     data = request.json
 #     # Make prediction using the loaded model
