@@ -1,120 +1,122 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: rgba(0, 56, 168, 0.7); /* Dark background for the entire body */
-  color: #f5f5f5; /* Light text color for contrast */
+html, body {
+  height: 100%; 
+  margin: 0;
+}
+
+.d-flex.flex-column.h-100 {
+  min-height: 100vh; /
+}
+
+.container-fluid.flex-fill {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styles */
+.header-section {
+  background-color: #000; 
+  color: white; 
+  padding: 1rem 0; 
+  text-align: center; 
+}
+
+/* Content section styling */
+.container-fluid {
+  flex-grow: 1; 
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  overflow-y: auto; 
+}
+
+.product-name {
+  margin: 10px; 
+}
+
+.container-fluid.flex-fill {
+  flex: 1;
+}
+
+/* Footer styles */
+footer {
+  /* padding: 1rem ;  */
+  background-color: #333; /* Dark background for the footer */
+  color: white; /* White text color */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333; /* Dark background for the footer */
+  color: white; /* White text color */
+  text-align: center;
+  padding: 1rem 0; /* Padding for the footer */
+}
+
+ body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #004080; 
+  color: #f5f5f5;
   margin: 0;
   padding: 0;
 }
 
-/* Navbar styles */
-.navbar {
-  background-color: #333; 
-}
-
-.text-center {
-  text-align: center; 
-  display: flex;
-  flex-direction: column; 
-  justify-content: center; 
-  align-items: center; 
-}
-
-#headline_top,
-#headline_bottom {
-  font-family: 'Arial', sans-serif; 
-  color: #f5f5f5; 
-  font-size: 1.5rem; 
-}
-
-#headline_top {
-  font-weight: bold; 
-}
-
-#headline_bottom {
-  font-style: italic; 
-}
-
-/* Hero section styles */
 .hero-section {
-  background: linear-gradient(to right bottom, rgba(0, 56, 168, 0.7), rgba(0, 0, 0, 0.7)),
-              url('/path-to-your-background-image.jpg') no-repeat center center / cover;
+  background: #004080; 
   color: white;
   text-align: center;
   padding: 5rem 0;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
 }
 
 .display-1 {
   font-size: 4.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Add text shadow for readability */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
 }
-
-.text-primary {
-  color: #ffcc00; /* A gold color for the primary text */
-}
-
+/* Button style */
 .lead {
-  font-size: 1.25rem; /* Larger lead text */
+  font-size: 1.25rem; 
   margin-bottom: 2rem;
 }
 
-/* Button styles */
 .btn {
-  padding: 0.75rem 1.5rem; /* Larger buttons */
+  padding: 0.75rem 1.5rem; 
   font-size: 1.25rem;
-  border-radius: 0.5rem; /* Slightly rounded edges for the buttons */
-  margin: 0 10px; /* Space out buttons */
-  box-shadow: 0 4px 8px #0056b3; /* Subtle shadow for depth */
-  transition: all 0.3s; /* Smooth transitions for hover effects */
+  border-radius: 0.5rem; 
+  margin: 0 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); 
+  transition: all 0.3s; 
 }
 
-.btn-primary {
-  background-color: #0056b3; /* Primary button color */
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #003d82; /* Darker on hover */
-}
-
-.btn-secondary, .btn-outline-secondary {
+.btn-outline-secondary {
   background-color: transparent;
   color: #fff;
-  border-color: #fff; /* White border for the secondary button */
+  border-color: #fff; 
 }
-
-.btn-secondary:hover, .btn-outline-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.1); /* Slight white tint on hover */
-}
-
-
-/* Flex container for button groups */
 .button-group {
   display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  flex-wrap: wrap; /* Wrap buttons to the next line on smaller screens */
+  justify-content: center; 
+  flex-wrap: wrap; 
 }
 
-/* Media queries for responsive adjustments */
-@media (max-width: 768px) {
-  .display-1 {
-      font-size: 3rem; /* Adjust size as needed for smaller screens */
-  }
-
-  .lead {
-      font-size: 1rem;
-  }
-
-  .btn {
-      font-size: 1rem;
-      padding: 0.5rem 1rem;
-  }
+html, body {
+  height: 100%;
+  margin: 0;
 }
 
-.uoft-logo img {
-  filter: brightness(0) invert(1);
-  margin-left: -50px;
- 
+.container-fluid {
+  min-height: calc(100vh -50vh); /* Replace <footer-height> with the actual height of your footer */
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  width: 100%;
 }
