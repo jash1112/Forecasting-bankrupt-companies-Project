@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.31.1.min.js" charset="utf-8"></script>
+</head>
+<body>
+    <div class="return-home">
+        <a href="/" class="home-button">Home</a>
+    </div>
+    <div id="companySelector">
+        <select id="companyDropdown" onchange="optionChanged(this.value)">
+          </select>
+    </div>
+    <div id="financialCharts">
+
+    </div>
+    <br>
+    <br>
+    <h1 class="table_label"><b>Predicted vs Actual Value Table </b></h1>
+    <div id="pre_vs_actual">
+        <div id="left_image">
+            <img src="https://i.ibb.co/fHzQZC6/LR-atu-predict.png" alt="image1">
+        </div>
+        <div id="right_images">
+            <img src="https://i.ibb.co/kJ4j3yW/LR-Actual.png" alt="image2">
+            <img src="https://i.ibb.co/rG6byML/LR-Prediction.png" alt="image3">
+        </div>
+    </div>
+    <h1 class="table_label"><b>Decision Tree</b></h1>
+    <div id="decision_tree">
+        <img src="https://i.ibb.co/RT1ryPq/decision-tree.png" alt="image4">
+    </div>
+    <br>
+    <h1 class="table_label"><b>Prediction Accuracy of Neural Network</b></h1>
+    <div id="prediction_dis">
+        <img src="https://i.ibb.co/HKPRDJn/predictions-distribution.png" alt="image5">
+    </div>
+    <br><br>
+    <h1 class="table_label"><b>Result: List of bankruptcy companies</b></h1>
+    <div id="result">
+        <img src="https://i.ibb.co/ggnx8HX/Bankrupt-Compnies.jpg" alt="image6" class="center">
+    </div>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
