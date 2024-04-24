@@ -73,7 +73,7 @@ function updateBarChart(index) {
   };
 
     var layout = {
-        title: `Altman Z-Score by Year for ${selectedData.Name}`,
+        title: `Altman Z-Score by Year`,
         xaxis: { title: 'Year', tickmode: 'linear' },
         yaxis: { title: 'Altman Z-Score' },
         margin: { t: 50 }
