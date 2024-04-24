@@ -15,6 +15,25 @@ The study includes the following hypotheses:
 - The first hypothesis (H1): The use of multi-layer neural networks predicts the financial failure of stock companies registered in the Canadian stock market.
 - The second hypothesis (H2): There is a statistically significant effect of the combination of ratios and financial indicators on the accuracy of multi-layer neural networks to predict the financial failure of stock companies registered in the Canadian stock market.
 
+# Machine Learning Models:
+
+## Neural Network
+Traditionally, the Altman Z-score has been pivotal in assessing the likelihood of a company, particularly within manufacturing, facing bankruptcy. This approach relies on analyzing profitability, leverage, liquidity, solvency, and activity ratios.
+In our Neural Network model tailored for bankruptcy prediction, we employ a comprehensive set of features including 'Current ratio', 'Quick Ratio', 'Cash ratio', and a range of financial metrics such as 'Return On Equity (ROE)', 'Net profit margin', and 'Debt-to-assets ratio', among others. This expanded feature set allows for a more nuanced evaluation compared to the traditional Altman Z-score methodology.
+The Neural Network demonstrates a superior accuracy rate of 97% in identifying companies at risk of distress, surpassing the 72% accuracy typically achieved by the Altman Z-score. By leveraging a broader spectrum of financial indicators, our model enhances predictive capabilities, offering valuable insights into a company's financial health.
+
+## Regression Models for Altman Z-score Prediction
+In addition to the Neural Network, we've employed both Linear Regression and Decision Tree Regression models to forecast the Altman Z-score for selected companies. Our evaluation criteria set a threshold R-squared score of 0.50 for model performance.
+For the Linear Regression model, the assessment yields the following metrics:
+Mean Absolute Error (MAE): 4.81
+Mean Squared Error (MSE): 400.50
+R-squared: 0.50
+Root Mean Squared Error (RMSE): 20.01
+Standard Deviation: 19.91
+These results indicate a strong performance, with our model closely aligning its predictions with actual values.
+Similarly, our Decision Tree model also exhibits robust performance in forecasting the Altman Z-score.
+
+
 ## The Project Sample:
 Companies listed on the Canadian stock market during the period 2013  - 2022.
 
