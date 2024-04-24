@@ -21,6 +21,30 @@ header {
     margin: 0 auto;
 }
 
+/* home button */
+
+.return-home {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+}
+
+.home-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #9cc5ee; 
+    color: #000; 
+    text-decoration: none; 
+    border-radius: 5px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3); 
+    transition: background-color 0.3s; 
+}
+
+.home-button:hover {
+    background-color: #b2cce6; 
+}
+
 select {
     width: 100%;
     padding: 10px;
