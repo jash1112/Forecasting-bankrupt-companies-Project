@@ -8,7 +8,7 @@
 .home-button {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #ffcc00; /* Bright color for visibility */
+    background-color: #9cc5ee; /* Bright color for visibility */
     color: #000; /* Text color */
     text-decoration: none; /* Remove underline from links */
     border-radius: 5px; /* Rounded corners */
@@ -17,7 +17,7 @@
 }
 
 .home-button:hover {
-    background-color: #e6b800; /* Slightly darker color on hover */
+    background-color: #b2cce6; /* Slightly darker color on hover */
 }
 
  /* Add a background image or a gradient for a more dynamic look */
@@ -33,7 +33,7 @@ body {
 
         /* Add some padding and text shadow to the header for depth */
         h1, h2 {
-            color: #ffcc00;
+            color: #b2cce6;
             text-align: center;
             padding: 20px 0;
             text-shadow: 2px 2px 4px #000000;
@@ -56,7 +56,7 @@ body {
         }
         
         li {
-            background-color: rgba(255, 204, 0, 0.2);
+            background-color: rgba(0, 106, 255, 0.2);
             margin-bottom: 10px;
             padding: 10px;
             border-radius: 5px;
