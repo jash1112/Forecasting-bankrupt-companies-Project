@@ -11,11 +11,12 @@ from sqlalchemy import Table
 app = Flask(__name__)
 
 # Database configuration
-render_username = 'project_4_yxfg_user'
-render_password = 'hXV3PAMngOCpFO4sL4bGIduNzihsNmVt'
-render_host = 'dpg-coih3pn79t8c738gop70-a.ohio-postgres.render.com'
-database = 'project_4_yxfg'
-engine = create_engine(f"postgresql+psycopg2://{render_username}:{render_password}@{render_host}:5432/{database}")
+render_username = 'companies_future_user'
+render_password = 'EYzOpF6fPsSXqlhuU2zl5ynR7y1WT5qq'
+render_host = 'dpg-cok3468l6cac73dt3dj0-a.oregon-postgres.render.com'
+database = 'companies_future'
+cxn_string = f"postgresql+psycopg2://{render_username}:{render_password}@{render_host}:5432/{database}"
+engine = create_engine(cxn_string, echo=False)
 
 # Create a MetaData object
 metadata = MetaData()
@@ -26,43 +27,25 @@ metadata.bind = engine
 # Reflect the tables
 metadata.reflect(bind=engine)
 
-# Print the table names to verify
+# # Print the table names to verify
 print(metadata.tables.keys())
 
 # Access the reflected table
-company_data_table = metadata.tables.get('Company_Data')
-
+company_data_table = metadata.tables.get('Company_Data_reduce')
+linear_regression_table = metadata.tables.get('Linear Regression')
 # Function to fetch data from the database
-# def fetch_data_from_database(table):
-#     if table is not None:
-#         with engine.connect() as connection:
-#             query = table.select()
-#             result = connection.execute(query)
-#             rows = result.fetchall()
-#             # Fetch column names as strings
-#             column_names = [str(column) for column in result.keys()]
-#             data = {column:[row[i] for row in rows if row[i] is not None] for i, column in enumerate(column_names)}
-#                         # Convert each row to a dictionary
-#             # return jsonify([{column: row[column] for column in column_names} for row in rows])
-#     return data
 def fetch_data_from_database(table):
     if table is not None:
-        session = Session(bind=engine)  # Use ORM session for querying
-        try:
-            query = session.query(table)  # ORM query
-            results = query.all()  # Fetch all results
-            data_list = [
-                {column.name: getattr(row, column.name) for column in table.columns}
-                for row in results
-            ]
-            return jsonify(data_list)  # Properly format and return JSON
-        except Exception as e:
-            session.rollback()  # Roll back in case of error
-            print(f"Error fetching data: {e}")
-        finally:
-            session.close()  # Always close the session
-    else:
-        return jsonify([])
+        with engine.connect() as connection:
+            query = table.select()
+            result = connection.execute(query)
+            rows = result.fetchall()
+            # Fetch column names as strings
+            column_names = [str(column) for column in result.keys()]
+            data = {column:[row[i] for row in rows if row[i] is not None] for i, column in enumerate(column_names)}
+            
+    return data
+
 
 # # Load the trained model
 # model = load_model("Forecasting_bankrupt_companies.h5")
@@ -76,8 +59,6 @@ def fetch_data_from_database(table):
 #     return jsonify({"prediction": prediction.tolist()})
 
 
-
-        
 @app.route('/api/data')
 def api_data():
     company_data = fetch_data_from_database(company_data_table)
@@ -85,6 +66,11 @@ def api_data():
     #     return jsonify({"error": "No data found"}), 404
     return jsonify(company_data)
 
+@app.route('/api/linear/regression')
+def api_linear():
+    linear_table = fetch_data_from_database(linear_regression_table)
+    
+    return jsonify(linear_table)
 
 # Static page routes
 @app.route('/')
