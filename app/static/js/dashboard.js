@@ -83,33 +83,33 @@ function updateBarChart(index) {
 
 }
 
-function updateLineChart(){
-    //Load actual and predicted data
-    const actualData = linear_data['Actual'];
-    const predictData = linear_data['Prediction'];
-    //Load chart
-    var trace = {
-        x: actualData,
-        y: predictData,
-        type: 'line',
-        marker: {
-          color: 'rgba(55,128,191,0.7)',
-          line: {
-            color: 'rgba(55,128,191,1.0)',
-            width: 2
-          }
-        }
-      };
+// function updateLineChart(){
+//     //Load actual and predicted data
+//     const actualData = linear_data['Actual'];
+//     const predictData = linear_data['Prediction'];
+//     //Load chart
+//     var trace = {
+//         x: actualData,
+//         y: predictData,
+//         type: 'line',
+//         marker: {
+//           color: 'rgba(55,128,191,0.7)',
+//           line: {
+//             color: 'rgba(55,128,191,1.0)',
+//             width: 2
+//           }
+//         }
+//       };
     
-      var layout = {
-        title: `Altman Z-Score by Year for ${selectedData.Name}`,
-        xaxis: { title: 'Year', tickmode: 'linear' },
-        yaxis: { title: 'Altman Z-Score' },
-        margin: { t: 50 }
-      };
+//       var layout = {
+//         title: `Altman Z-Score by Year for ${selectedData.Name}`,
+//         xaxis: { title: 'Year', tickmode: 'linear' },
+//         yaxis: { title: 'Altman Z-Score' },
+//         margin: { t: 50 }
+//       };
     
-      Plotly.newPlot('modelOutputs', [trace], layout);
-};
+//       Plotly.newPlot('modelOutputs', [trace], layout);
+// };
 
 function optionChanged(newSample) {
     updateBarChart(newSample);
