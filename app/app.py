@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker, Session, scoped_session
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy import MetaData
 from flask import Flask, request, jsonify
-from keras.models import load_model
+#from keras.models import load_model
 from sqlalchemy import Table
 
 # Flask app setup
